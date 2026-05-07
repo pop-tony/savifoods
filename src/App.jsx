@@ -1,12 +1,12 @@
 
 import { useState } from 'react'
 import { ThemeProvider } from './context/ThemeContext'
-import NavBar from './components/NavBar'
 import HeroSection from './components/HeroSection'
 import MenuGrid from './components/MenuGrid'
 import ReservationForm from './components/ReservationForm'
 import TestimonialCarousel from './components/TestimonialCarousel'
 import Footer from './components/Footer'
+import NavBar from './components/NavBar'
 
 function AppContent() {
   const [activeCategory, setActiveCategory] = useState('All')
