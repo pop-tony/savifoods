@@ -6,6 +6,7 @@ import MenuGrid from './components/MenuGrid'
 import ReservationForm from './components/ReservationForm'
 import TestimonialCarousel from './components/TestimonialCarousel'
 import Footer from './components/Footer'
+import NavBar from './components/Navbar'
 
 
 function AppContent() {
@@ -24,7 +25,7 @@ function AppContent() {
 
   return (
     <div className="bg-white dark:bg-zinc-950">
-      
+      <NavBar />
       <main>
         <HeroSection />
 
