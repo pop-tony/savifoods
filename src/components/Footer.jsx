@@ -1,4 +1,4 @@
-// src/components/Footer.jsx
+
 export default function Footer() {
     return (
       <footer id="contact" className="bg-zinc-100 px-4 py-12 text-zinc-600 dark:bg-black dark:text-zinc-400">

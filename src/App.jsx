@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import { useState } from 'react'
 import { ThemeProvider } from './context/ThemeContext'
 import NavBar from './components/NavBar'

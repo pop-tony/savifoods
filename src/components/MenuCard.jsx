@@ -1,4 +1,4 @@
-// src/components/MenuCard.jsx
+
 export default function MenuCard({ image, name, price, description, tag, onBook }) {
     return (
       <div className="group overflow-hidden rounded-2xl bg-white text-zinc-900 shadow-lg transition hover:scale-[1.02] dark:bg-zinc-900 dark:text-white">
