@@ -1,4 +1,4 @@
-// src/components/NavBar.jsx
+
 import { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
 
