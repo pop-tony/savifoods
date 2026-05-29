@@ -3,6 +3,8 @@ import { format, addDays } from 'date-fns';
 import { ArrowLeft, Calendar, CheckCircle2, Clock, CreditCard, X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { timeSlots } from '../data/dishes';
+import { toast } from 'sonner';
+import axios from 'axios';
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }
 
@@ -16,6 +18,9 @@ export const Reservation = () => {
     const [toPay, setToPay] = useState(0);
 
     const next7Days = Array.from({ length: 7 }, (_, i) => addDays(new Date(), i));
+
+    const key = import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY;
+    const backendUrl = import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_BACKEND_URL : "/api";
 
     useEffect(() => {
         const handleEsc = (e) => e.key === 'Escape' && closeModal()
@@ -48,9 +53,9 @@ export const Reservation = () => {
   
         try {
           toast.success(`Booked! Ref: ${response.reference}`);
-          setBookingRef(response.reference);
+          
           await createBooking(response.reference);
-          setStep('success');
+          
         } catch (err) {
           toast.error('Payment succeeded but order save failed');
           console.error(err);
@@ -71,23 +76,27 @@ export const Reservation = () => {
           return;
         }
     
-        const handler = window.PaystackPop.setup({
-          key: key,
-          email: formData.email,
-          amount: Math.round(toPay),
-          currency: 'GHS',
-          ref: `FADE_${Date.now()}_${Math.floor(Math.random() * 1000000)}`,
-          metadata: {
-            custom_fields: [
-              { display_name: "Service", variable_name: "service", value: 'Reservation' },
-              { display_name: "Date", variable_name: "date", value: formData.date },
-              { display_name: "Time", variable_name: "time", value: formData.time }
-            ]
-          },
-          callback: (response)=>handlePaymentSuccess(response),
-          onClose: () => handlePaymentClose,
-        });
-        handler.openIframe();
+        try {
+            const handler = window.PaystackPop.setup({
+                key: key,
+                email: formData.email,
+                amount: Math.round(toPay),
+                currency: 'GHS',
+                ref: `FADE_${Date.now()}_${Math.floor(Math.random() * 1000000)}`,
+                metadata: {
+                  custom_fields: [
+                    { display_name: "Service", variable_name: "service", value: 'Reservation' },
+                    { display_name: "Date", variable_name: "date", value: formData.date },
+                    { display_name: "Time", variable_name: "time", value: formData.time }
+                  ]
+                },
+                callback: (response)=>handlePaymentSuccess(response),
+                onClose: () => handlePaymentClose,
+              });
+              handler.openIframe();
+        } catch (error) {
+            console.log(error)
+        }
       };
     
       const createBooking = async (ref) => {
@@ -97,11 +106,14 @@ export const Reservation = () => {
     
           if (book.data.success) {
             toast.success("Order placed successfully!");
+            setStep('success');
             clearCart();
           }else{
+            toast.error("Order saved locally. Contact support with ref: " + reference);
             console.log(book.data)
           }
         } catch (err) {
+            toast.error("Order saved locally. Contact support with ref: " + reference);
           console.error(err);
         }
       };
@@ -286,8 +298,8 @@ export const Reservation = () => {
 
                                 
                                 <button
-                                    type="button"
-                                    onClick={() => setStep('payment')}
+                                    type="submit"
+                                    onClick={() => {setStep('payment')}}
                                     className="cursor-pointer w-full rounded-full bg-zinc-900 py-4 font-semibold text-white hover:bg-amber-500 dark:bg-white dark:text-black"
                                 >
                                     Continue to Payment
@@ -360,7 +372,7 @@ export const Reservation = () => {
 
                             <button
                             type='button'
-                            //onClick={payWithPaystack}
+                            onClick={handlePay}
                             disabled={isProcessing}
                             className='cursor-pointer mt-6 w-full rounded-full bg-zinc-900 py-4 font-semibold text-white transition hover:bg-rose-500 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed dark:bg-white dark:text-black dark:hover:bg-rose-500 dark:hover:text-white'
                             >

@@ -49,8 +49,8 @@ export default function Cart() {
   const key = import.meta.env.VITE_PAYSTACK_LIVE_PUBLIC_KEY;
   const backendUrl = import.meta.env.VITE_ENV === "development" ? import.meta.env.VITE_BACKEND_URL : "/api";
 
-  const payWithPaystack = (e) => {
-    e.preventDefault();
+  const payWithPaystack = () => {
+    //e.preventDefault();
 
     if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
       toast.error('Please fill all required fields');
@@ -143,6 +143,7 @@ export default function Cart() {
         toast.success("Order placed successfully!");
         removeFromCart(item.cartItemId); // Remove only this item
       } else {
+        toast.error("Order saved locally. Contact support with ref: " + reference);
         console.log(order.data)
       }
     } catch (error) {
@@ -290,7 +291,7 @@ export default function Cart() {
             {checkoutStep === 'checkout' && checkoutItem && (
             <>
                 <div className="flex-1 overflow-y-auto p-6">
-                <form onSubmit={payWithPaystack} className="space-y-4">
+                <form className="space-y-4">
                     <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 dark:border-amber-400/20 dark:bg-amber-500/10">
                     <p className="text-sm font-semibold text-amber-900 dark:text-amber-200">
                         Checking out: {checkoutItem.name} x{checkoutItem.quantity}
@@ -377,8 +378,8 @@ export default function Cart() {
 
                 <div className="border-t border-zinc-200 p-6 dark:border-zinc-800">
                 <button
-                    type="button"
-                    onClick={payWithPaystack}
+                    type="submit"
+                    onClick={()=>payWithPaystack()}
                     className="w-full rounded-full bg-zinc-900 py-4 font-semibold text-white transition hover:bg-rose-500 hover:scale-[1.02] active:scale-[0.98] dark:bg-white dark:text-black dark:hover:bg-rose-500 dark:hover:text-white"
                 >
                     Pay GHS {(checkoutItem.price * checkoutItem.quantity).toFixed(2)} with Paystack
