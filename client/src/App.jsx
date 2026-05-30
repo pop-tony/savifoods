@@ -2,7 +2,7 @@
 import { ThemeProvider } from './context/ThemeContext'
 import { CartProvider } from './context/CartContext'
 import Footer from './components/Footer'
-//import NavBar from './components/Navbar'
+import NavBar from './components/Navbar'
 import DishesPage from './pages/DishesPage'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
@@ -15,7 +15,7 @@ import OrderDetails from './pages/OrderDetails'
 function AppContent() {
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-zinc-950">
-      
+      <NavBar />
       <main className="flex-1">
         <Routes>
           <Route path='/' element={<Home />} />
