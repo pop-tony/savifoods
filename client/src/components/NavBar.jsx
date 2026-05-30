@@ -75,12 +75,19 @@ export default function NavBar() {
               </a>
             ))}
 
+            <a
+              onClick={()=>navigate('/orders')}
+              className="cursor-pointer relative rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-amber-400"
+              >
+                Orders
+            </a>
+
             {/* Reserve button with cart badge */}
             <a
               onClick={()=>navigate('/cart')}
               className="cursor-pointer relative rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-amber-400"
             >
-              Orders
+              Cart
               {cartCount > 0 && (
                 <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                   {cartCount > 9? '9+' : cartCount}
@@ -133,6 +140,12 @@ export default function NavBar() {
                 {link.label}
               </a>
             ))}
+            <a
+              onClick={()=>{handleLinkClick(); navigate('/orders')}}
+              className="cursor-pointer relative rounded-full bg-amber-500 px-6 py-2.5 text-sm font-semibold text-black transition hover:bg-amber-400"
+              >
+                Orders
+            </a>
             <a
               href="#reserve"
               onClick={handleLinkClick}

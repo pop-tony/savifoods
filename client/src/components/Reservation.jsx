@@ -52,9 +52,9 @@ export const Reservation = () => {
     const handlePaymentSuccess = async (response) => {
   
         try {
-          toast.success(`Booked! Ref: ${response.reference}`);
+          toast.success(`Booked! Ref: `);
           
-          await createBooking(response.reference);
+          await createBooking();
           
         } catch (err) {
           toast.error('Payment succeeded but order save failed');
@@ -95,11 +95,11 @@ export const Reservation = () => {
               });
               handler.openIframe();
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
       };
     
-      const createBooking = async (ref) => {
+      const createBooking = async () => {
     
         try {
           const book = await axios.post(`${backendUrl}/order/consult`, {formData});
@@ -109,11 +109,11 @@ export const Reservation = () => {
             setStep('success');
             clearCart();
           }else{
-            toast.error("Order saved locally. Contact support with ref: " + reference);
+            toast.error("Order saved locally. Contact support with ref: ");
             console.log(book.data)
           }
         } catch (err) {
-            toast.error("Order saved locally. Contact support with ref: " + reference);
+            toast.error("Order saved locally. Contact support with ref: ");
           console.error(err);
         }
       };

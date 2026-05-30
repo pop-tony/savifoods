@@ -25,7 +25,7 @@ export default function MenuCard({ image, name, price, description, tag, onAddTo
         </p>
         <button
           onClick={() => onAddToOrder({ id: name, name, price: Number(price) })}
-          className="w-full rounded-md bg-amber-500 py-1.5 text-xs font-semibold text-black transition hover:bg-amber-400 sm:rounded-lg sm:py-2 sm:text-base"
+          className="cursor-pointer w-full rounded-md bg-amber-500 py-1.5 text-xs font-semibold text-black transition hover:bg-amber-400 sm:rounded-lg sm:py-2 sm:text-base"
         >
           Add to Order
         </button>

@@ -10,7 +10,7 @@ const ordersShema = new mongoose.Schema({
     quantity:{type: Number, required: true},
     total:{type: Number, required: true},
     paymentRef:{type: String, required: true},
-    status: {type: String, default: "order made"},
+    status: {type: String, default: "Confirmed"},
 },{timestamps: true},)
 
 const orderAModel = mongoose.models.sordersH || mongoose.model('sordersH', ordersShema);

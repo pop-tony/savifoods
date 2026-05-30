@@ -9,16 +9,16 @@ export function CartProvider({ children }) {
   const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    console.log('[CART] Loading from localStorage...');
+    
     try {
       const saved = localStorage.getItem('savifood-cart');
-      console.log('[CART] Raw saved data:', saved);
+      
       if (saved) {
         const parsed = JSON.parse(saved);
-        console.log('[CART] Parsed data:', parsed);
+        
         if (Array.isArray(parsed) && parsed.length > 0) {
           setCartItems(parsed);
-          console.log('[CART] Loaded', parsed.length, 'items');
+          
         } else {
           console.log('[CART] No items to load or invalid format');
         }

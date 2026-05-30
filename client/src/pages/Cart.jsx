@@ -6,10 +6,12 @@ import { useCart } from '../context/CartContext';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useOrderContext } from '../context/OrderContext';
 
 export default function Cart() {
 
   const navigate = useNavigate();
+  const { addOrder } = useOrderContext();
   const {
     cartItems,
     removeFromCart,
@@ -141,6 +143,7 @@ export default function Cart() {
       const order = await axios.post(`${backendUrl}/order/create-order`, {orderData});
       if (order.data.success) {
         toast.success("Order placed successfully!");
+        addOrder(order.data.data);
         removeFromCart(item.cartItemId); // Remove only this item
       } else {
         toast.error("Order saved locally. Contact support with ref: " + reference);
@@ -148,7 +151,7 @@ export default function Cart() {
       }
     } catch (error) {
       toast.error("Order saved locally. Contact support with ref: " + reference);
-      console.log(error);
+      console.error(error);
       removeFromCart(item.cartItemId);
     }
   };
@@ -380,7 +383,7 @@ export default function Cart() {
                 <button
                     type="submit"
                     onClick={()=>payWithPaystack()}
-                    className="w-full rounded-full bg-zinc-900 py-4 font-semibold text-white transition hover:bg-rose-500 hover:scale-[1.02] active:scale-[0.98] dark:bg-white dark:text-black dark:hover:bg-rose-500 dark:hover:text-white"
+                    className="cursor-pointer w-full rounded-full bg-zinc-900 py-4 font-semibold text-white transition hover:bg-rose-500 hover:scale-[1.02] active:scale-[0.98] dark:bg-white dark:text-black dark:hover:bg-rose-500 dark:hover:text-white"
                 >
                     Pay GHS {(checkoutItem.price * checkoutItem.quantity).toFixed(2)} with Paystack
                 </button>

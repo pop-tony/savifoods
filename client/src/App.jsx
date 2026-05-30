@@ -7,6 +7,10 @@ import DishesPage from './pages/DishesPage'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
+import { Orders } from './pages/Orders'
+import { OrderProvider } from './context/OrderContext'
+import { Admin } from './pages/Admin'
+import OrderDetails from './pages/OrderDetails'
 
 function AppContent() {
   return (
@@ -17,6 +21,9 @@ function AppContent() {
           <Route path='/' element={<Home />} />
           <Route path='/dishes' element={<DishesPage />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/orders' element={<Orders />} />
+          <Route path='/admin' element={<Admin />} />
+          <Route path='/order/:id' element={<OrderDetails />} />
         </Routes>
       </main>
       <Footer />
@@ -27,9 +34,11 @@ function AppContent() {
 function App() {
   return (
     <ThemeProvider>
-      <CartProvider>
-        <AppContent />
-      </CartProvider>
+      <OrderProvider>
+        <CartProvider>
+          <AppContent />
+        </CartProvider>
+      </OrderProvider>
     </ThemeProvider>
   )
 }
