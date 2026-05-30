@@ -2,7 +2,7 @@
 import { ThemeProvider } from './context/ThemeContext'
 import { CartProvider } from './context/CartContext'
 import Footer from './components/Footer'
-import NavBar from './components/Navbar'
+import NavBar from './components/NavBar'
 import DishesPage from './pages/DishesPage'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
