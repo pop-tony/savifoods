@@ -39,7 +39,7 @@ export const createConsult = async (req, res) => {
     const consult = new consultModel({name, email, phone, date, time, guests });
     await consult.save();
 
-    return res.json({ success: true, message: "Reservation successfully booked" });
+    return res.json({ success: true, message: "Reservation successfully booked", data: consult._id });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: error.message });
